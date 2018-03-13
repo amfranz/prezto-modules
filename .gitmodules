@@ -1,0 +1,3 @@
+[submodule "wd/external"]
+	path = wd/external
+	url = https://github.com/mfaerevaag/wd.git

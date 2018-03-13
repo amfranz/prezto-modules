@@ -1,0 +1,32 @@
+#compdef tmuxp
+
+_tmuxp() {
+	local curcontext="$curcontext" state line
+	typeset -A opt_args
+
+	_arguments \
+		'1: :->command'\
+		'2: :->session'
+
+	case $state in
+		command)
+			_arguments '1: :(convert freeze import load)'
+			;;
+		session)
+			case $words[2] in
+				load)
+					local sessions=(${(f)"$(find ~/.tmuxp/ -mindepth 1 -maxdepth 1 -type f -name '*.yml' -printf "%f\n" | sed -e 's/\.yml$//')"})
+					compadd "$@" "${sessions[@]}"
+					;;
+				*)
+					_files
+					;;
+			esac
+			;;
+		*)
+			_files
+			;;
+	esac
+}
+
+_tmuxp "$@"
